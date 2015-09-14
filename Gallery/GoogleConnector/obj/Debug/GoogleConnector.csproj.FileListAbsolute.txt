@@ -1,0 +1,4 @@
+D:\VS Projects\Gallery\GoogleConnector\bin\Debug\GoogleConnector.dll
+D:\VS Projects\Gallery\GoogleConnector\bin\Debug\GoogleConnector.pdb
+D:\VS Projects\Gallery\GoogleConnector\obj\Debug\GoogleConnector.dll
+D:\VS Projects\Gallery\GoogleConnector\obj\Debug\GoogleConnector.pdb

@@ -1,0 +1,88 @@
+﻿<Window x:Class="Gallery.Views.Gallery"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:Gallery.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
+        FontSize="18"
+        Icon="../Images/1440690461_eye_preview_see_seen_view.png"
+        Title="Gallery" Height="600" Width="740">
+
+    <Window.DataContext>
+        <viewModel:GalleryViewModel/>
+    </Window.DataContext>
+
+    <DockPanel>
+        <!--<StackPanel DockPanel.Dock="Top">
+            <TextBlock Width="96" Background="Black">123</TextBlock>
+            <Image Source="../Images/oneInchImg.png" Width="96"></Image>
+        </StackPanel>-->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Center">
+            <DockPanel Width="720" >
+                <Label VerticalContentAlignment="Center">Search:</Label>
+                <TextBox Width="150" Height="30"  Text="{Binding GoogleImageSearch.SearchText}"></TextBox>
+                <Label VerticalContentAlignment="Center">Size:</Label>
+                <ComboBox 
+                    Name="SizeEnumComboBox" 
+                    SelectedIndex="0" Margin="8"
+                    ItemsSource="{Binding GoogleImageSearch.Sizes}"
+                    Text="{Binding GoogleImageSearch.ImageSize}">
+                </ComboBox>
+                <Label VerticalContentAlignment="Center">Images[1-8]:</Label>
+                <TextBox Width="150" Height="30"  Text="{Binding GoogleImageSearch.MaxImages}"></TextBox>
+                <Button
+                    DockPanel.Dock="Right"
+                    Content="FIND" HorizontalAlignment="Right" 
+                    Command="{Binding GoogleSearch}" 
+                    CommandParameter="{Binding Text,ElementName=SearchText}"/>
+            </DockPanel>
+        </StackPanel>
+       
+        <StackPanel DockPanel.Dock="Top" Height="310" >
+            <Image  x:Name="ImageControl" Margin="2" Source="{Binding ImagePath}" Height="300"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom" 
+                    Orientation="Horizontal"
+                    Height="50"
+                    HorizontalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Command="{Binding PreviousButtonCommand}" Content="prev"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <ListBox 
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ItemsSource="{Binding ImagesPath}" 
+                        x:Name="ImagesListBox"
+                            >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" >
+                                </WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding}" Width="35" Height="35" Stretch="Uniform" Cursor="Hand" x:Name="Image">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger 
+                                            EventName="MouseUp">
+                                            <command:EventToCommand 
+                                                Command="{Binding DataContext.IconImageCommand, ElementName=ImagesListBox}"
+                                                CommandParameter="{Binding }"
+                                                PassEventArgsToCommand="False"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <Button Grid.Column="2" Command="{Binding NextButtonCommand}" Content="next"/>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
+</Window>
